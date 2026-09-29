@@ -1,8 +1,9 @@
 ---
 title: "Formatowanie daty po polsku"
+aliases: [/../snippety/formatowanie-daty/]
 description: "Czytelna data z jawną strefą czasową w JavaScript."
 date: 2026-09-29
-tags: [javascript, daty]
+tags: [javascript, dates]
 ---
 `Intl.DateTimeFormat` pozwala formatować daty bez dodatkowych bibliotek.
 

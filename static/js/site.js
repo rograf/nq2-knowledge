@@ -1,6 +1,6 @@
 (() => {
   const button = document.querySelector('#theme-toggle');
-  const updateLabel = () => button.setAttribute('aria-label', document.documentElement.dataset.bsTheme === 'dark' ? 'Włącz jasny motyw' : 'Włącz ciemny motyw');
+  const updateLabel = () => button.setAttribute('aria-label', document.documentElement.dataset.bsTheme === 'dark' ? button.dataset.lightLabel : button.dataset.darkLabel);
   button.hidden = false;
   updateLabel();
   button.addEventListener('click', () => {
@@ -15,7 +15,7 @@
   const input = box.querySelector('input');
   const results = box.querySelector('#search-results');
   const status = box.querySelector('#search-status');
-  const normalize = text => text.toLocaleLowerCase('pl').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
+  const normalize = text => text.toLocaleLowerCase(document.documentElement.lang).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
   let index;
   let request = 0;
   input.addEventListener('input', async () => {
@@ -25,7 +25,7 @@
     status.textContent = '';
     if (query.length < 2) return;
     try {
-      status.textContent = 'Wyszukiwanie…';
+      status.textContent = box.dataset.searching;
       if (!index) {
         const response = await fetch(box.dataset.searchUrl);
         if (!response.ok) throw new Error('Search unavailable');
@@ -34,7 +34,7 @@
       if (current !== request) return;
       const words = query.split(/\s+/);
       const matches = index.filter(page => words.every(word => normalize(`${page.title} ${page.description} ${page.content}`).includes(word))).slice(0, 12);
-      status.textContent = matches.length ? `Wyniki: ${matches.length}` : 'Brak wyników. Spróbuj innego hasła.';
+      status.textContent = matches.length ? `${box.dataset.results} ${matches.length}` : box.dataset.noResults;
       for (const page of matches) {
         const li = document.createElement('li');
         const link = document.createElement('a');
@@ -47,7 +47,7 @@
         results.append(li);
       }
     } catch {
-      if (current === request) status.textContent = 'Wyszukiwanie jest chwilowo niedostępne. Skorzystaj z sekcji poniżej.';
+      if (current === request) status.textContent = box.dataset.unavailable;
     }
   });
 })();

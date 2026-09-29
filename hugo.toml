@@ -1,12 +1,24 @@
 baseURL = 'https://rograf.github.io/nq2-knowledge/'
-locale = 'pl-PL'
-defaultContentLanguage = 'pl'
+defaultContentLanguage = 'en'
 title = 'NQ2 Knowledge'
 enableRobotsTXT = true
 timeZone = 'Europe/Warsaw'
 
-[params]
-  description = 'Dokumentacja aplikacji, integracje i kod w jednym miejscu.'
+[languages.en]
+  contentDir = 'content/en'
+  label = 'English'
+  locale = 'en-US'
+  weight = 1
+  [languages.en.params]
+    description = 'Application documentation, integrations, and code in one place.'
+
+[languages.pl]
+  contentDir = 'content/pl'
+  label = 'Polski'
+  locale = 'pl-PL'
+  weight = 2
+  [languages.pl.params]
+    description = 'Dokumentacja aplikacji, integracje i kod w jednym miejscu.'
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']

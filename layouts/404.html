@@ -1,1 +1,1 @@
-{{ define "main" }}<section class="hero"><div class="eyebrow">BŁĄD 404</div><h1>Tej strony tu nie ma.</h1><p>Sprawdź adres lub poszukaj materiału w bazie wiedzy.</p><a class="btn btn-primary" href="{{ site.Home.RelPermalink }}">Wróć do bazy wiedzy</a></section>{{ end }}
+{{ define "main" }}<section class="hero"><div class="eyebrow">{{ i18n "error404" }}</div><h1>{{ i18n "pageNotFound" }}</h1><p>{{ i18n "notFoundHelp" }}</p><a class="btn btn-primary" href="{{ site.Home.RelPermalink }}">{{ i18n "backToHome" }}</a></section>{{ end }}

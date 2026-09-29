@@ -1,8 +1,9 @@
 ---
 title: "Jak opisać integrację"
+aliases: [/../integracje/szablon-integracji/]
 description: "Lista informacji potrzebnych do odtworzenia połączenia z usługą."
 date: 2026-09-29
-tags: [integracje, redakcja]
+tags: [integrations, authoring]
 ---
 To przewodnik redakcyjny. Nie opisuje istniejącego API NQ2 — konkretne adresy, parametry i wymagania uzupełnij na podstawie wdrażanej integracji.
 
@@ -12,7 +13,7 @@ Opisz, jakie dane przepływają między aplikacją a usługą, w którym kierunk
 
 ## Konfiguracja
 
-Wymień pola ustawień i ich znaczenie. W przykładach stosuj wartości zastępcze, np. `TWOJ_TOKEN`, zamiast rzeczywistych sekretów.
+Wymień pola ustawień i ich znaczenie. W przykładach stosuj wartości zastępcze, np. `YOUR_TOKEN`, zamiast rzeczywistych sekretów.
 
 ## Przykładowe żądanie i odpowiedź
 

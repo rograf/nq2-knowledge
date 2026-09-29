@@ -40,10 +40,12 @@ jobs:
         shell: bash
         run: |
           if [ -n "$PAGES_BASE_URL" ]; then
-            hugo --gc --minify --panicOnWarning --baseURL "${PAGES_BASE_URL}/"
+            hugo --gc --minify --panicOnWarning --cleanDestinationDir --baseURL "${PAGES_BASE_URL}/"
           else
-            hugo --gc --minify --panicOnWarning
+            hugo --gc --minify --panicOnWarning --cleanDestinationDir
           fi
+      - name: Check translations and internal links
+        run: python3 scripts/check_site.py
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v5

@@ -1,5 +1,6 @@
 ---
 title: "Jedno miejsce na wiedzę o NQ2"
+aliases: [/../blog/start-bazy-wiedzy/]
 description: "Dokumentacja, integracje, kod i notatki z rozwoju we wspólnym repozytorium."
 date: 2026-09-29
 tags: [nq2]

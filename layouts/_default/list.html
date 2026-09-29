@@ -1,0 +1,4 @@
+{{ define "main" }}
+<div class="page-heading"><a class="back-link" href="{{ site.Home.RelPermalink }}">← Baza wiedzy</a><h1>{{ .Title }}</h1><p class="lead text-body-secondary">{{ .Description }}</p><div class="prose">{{ .Content }}</div></div>
+<div class="article-list mb-5">{{ range .Pages.ByWeight }}{{ partial "entry.html" . }}{{ else }}<p>Materiały pojawią się tutaj wkrótce.</p>{{ end }}</div>
+{{ end }}

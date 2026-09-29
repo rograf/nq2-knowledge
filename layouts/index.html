@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="eyebrow"><span class="status-dot"></span> NQ2 / CENTRUM WIEDZY</div>
+  <h1>{{ .Title }}</h1>
+  <div class="hero-description">{{ .Content }}</div>
+  <div class="search-box" data-search-url="{{ "index.json" | relURL }}" hidden>
+    <label for="search" class="form-label">Czego szukasz?</label>
+    <input id="search" class="form-control form-control-lg" type="search" placeholder="Szukaj w dokumentacji, integracjach, kodzie…" autocomplete="off" aria-controls="search-results">
+    <p id="search-status" class="small text-body-secondary mt-2" role="status"></p>
+    <ul id="search-results" class="list-unstyled search-results"></ul>
+  </div>
+</section>
+<section aria-labelledby="sections-title" class="section-block">
+  <div class="section-heading"><h2 id="sections-title">Znajdź swoją odpowiedź</h2><span class="text-body-secondary small">01 — BIBLIOTEKA</span></div>
+  <div class="section-grid">{{ range site.Sections.ByWeight }}
+    <a class="section-card" href="{{ .RelPermalink }}">
+      <div class="card-top"><span class="section-symbol" aria-hidden="true">{{ .Params.symbol }}</span><span class="text-body-secondary">↗</span></div>
+      <h3>{{ .Title }}</h3><p>{{ .Description }}</p><span class="card-bottom">Przeglądaj <span aria-hidden="true">→</span></span>
+    </a>
+  {{ end }}</div>
+</section>
+<section class="section-block" aria-labelledby="recent-title">
+  <div class="section-heading"><h2 id="recent-title">Ostatnio dodane</h2><span class="text-body-secondary small">02 — WARTO PRZECZYTAĆ</span></div>
+  <div class="article-list">{{ range first 5 site.RegularPages.ByDate.Reverse }}{{ partial "entry.html" . }}{{ end }}</div>
+</section>
+{{ end }}

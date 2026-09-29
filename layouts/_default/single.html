@@ -1,0 +1,11 @@
+{{ define "main" }}
+<div class="reading-layout">
+  <aside class="section-nav" aria-label="Artykuły w sekcji"><a class="back-link" href="{{ .CurrentSection.RelPermalink }}">← {{ .CurrentSection.Title }}</a>{{ $current := . }}{{ range .CurrentSection.RegularPages.ByWeight }}<a href="{{ .RelPermalink }}" {{ if eq . $current }}aria-current="page"{{ end }}>{{ .Title }}</a>{{ end }}</aside>
+  <article class="article-body">
+    <header class="article-heading"><div class="eyebrow">{{ .CurrentSection.Title }}</div><h1>{{ .Title }}</h1><p class="lead text-body-secondary">{{ .Description }}</p><div class="text-body-secondary small">{{ .Date.Format "02.01.2006" }} · Czas czytania: {{ .ReadingTime }} min</div></header>
+    <div class="prose">{{ .Content }}</div>
+    {{ with .GetTerms "tags" }}<div class="tags">{{ range . }}<a class="badge text-bg-secondary" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}</div>{{ end }}
+  </article>
+  <aside class="toc" aria-label="Spis treści">{{ if gt (len .Fragments.Headings) 0 }}<div class="eyebrow mb-3">NA TEJ STRONIE</div>{{ .TableOfContents }}{{ end }}</aside>
+</div>
+{{ end }}

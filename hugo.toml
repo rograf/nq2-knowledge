@@ -1,0 +1,26 @@
+baseURL = 'https://rograf.github.io/nq2-knowledge/'
+locale = 'pl-PL'
+defaultContentLanguage = 'pl'
+title = 'NQ2 Knowledge'
+enableRobotsTXT = true
+timeZone = 'Europe/Warsaw'
+
+[params]
+  description = 'Dokumentacja aplikacji, integracje i kod w jednym miejscu.'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[taxonomies]
+  tag = 'tags'
+
+[markup.highlight]
+  style = 'github-dark'
+  lineNos = false
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3
+
+[caches.images]
+  dir = ':cacheDir/images'

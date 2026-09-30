@@ -1,6 +1,6 @@
 ---
 title: "Blog"
 description: "Development notes, ideas, and new capabilities."
-weight: 4
+weight: 6
 symbol: "✎"
 ---

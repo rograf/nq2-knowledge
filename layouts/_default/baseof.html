@@ -7,10 +7,12 @@
   <meta name="description" content="{{ .Description | default site.Params.description }}">
   <link rel="canonical" href="{{ .Permalink }}">
   {{ range .AllTranslations }}<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">{{ end }}
-  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  <link rel="icon" href="{{ "nq2-logo.svg" | relURL }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ "vendor/nq2-style/nq.bootstrap.min.css" | relURL }}">
   {{ $css := resources.Get "css/site.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $navigation := resources.Get "css/navigation.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $navigation.RelPermalink }}" integrity="{{ $navigation.Data.Integrity }}">
   {{ with site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">{{ end }}
   <script src="{{ "js/theme.js" | relURL }}"></script>
 </head>
@@ -18,20 +20,40 @@
   <a class="skip-link" href="#main">{{ i18n "skipToContent" }}</a>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="{{ site.Home.RelPermalink }}"><span class="brand-mark">nq<span>2</span></span><span>Knowledge<span class="brand-caption">{{ i18n "knowledgeBase" | upper }}</span></span></a>
-      <nav class="top-nav" aria-label="{{ i18n "mainNavigation" }}">
+      <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ site.Title }}">
+        <img class="brand-logo" src="{{ "nq2-logo.svg" | relURL }}" alt="NQ2" width="96" height="32">
+        <span class="brand-caption">{{ i18n "knowledgeBase" | upper }}</span>
+      </a>
+      <nav id="primary-navigation" class="top-nav" aria-label="{{ i18n "mainNavigation" }}">
         {{ $current := . }}{{ range site.Sections.ByWeight }}
-        <a href="{{ .RelPermalink }}" {{ if or (eq $current .) (.IsAncestor $current) }}aria-current="page"{{ end }}>{{ .Title }}</a>
+        <a href="{{ .RelPermalink }}" {{ if or (eq $current .) (.IsAncestor $current) }}aria-current="page"{{ end }}>{{ partial "nav-icon.html" .Section }}<span>{{ .Title }}</span></a>
         {{ end }}
       </nav>
       <div class="header-controls">
-        {{ partial "language-switcher.html" . }}
-        <button id="theme-toggle" class="btn btn-outline-primary btn-sm" type="button" aria-label="{{ i18n "darkTheme" }}" data-light-label="{{ i18n "lightTheme" }}" data-dark-label="{{ i18n "darkTheme" }}" hidden>◐ <span>{{ i18n "theme" }}</span></button>
+        <details class="language-dropdown" id="language-dropdown">
+          <summary aria-label="{{ i18n "languageNavigation" }}: {{ site.Language.Label }}">
+            <span>{{ site.Language.Lang | upper }}</span>
+            <span class="language-chevron">{{ partial "nav-icon.html" "chevron" }}</span>
+          </summary>
+          <div class="language-panel">
+            <div class="language-heading">{{ partial "nav-icon.html" "language" }}<span>{{ i18n "languageNavigation" }}</span></div>
+            {{ partial "language-switcher.html" . }}
+          </div>
+        </details>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="{{ i18n "darkTheme" }}" data-light-label="{{ i18n "lightTheme" }}" data-dark-label="{{ i18n "darkTheme" }}" hidden>
+          <span data-theme-icon="light">{{ partial "nav-icon.html" "sun" }}</span>
+          <span data-theme-icon="dark">{{ partial "nav-icon.html" "moon" }}</span>
+        </button>
+        <button id="navigation-toggle" class="navigation-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="{{ i18n "openMenu" }}" data-open-label="{{ i18n "openMenu" }}" data-close-label="{{ i18n "closeMenu" }}" hidden>
+          <span class="menu-open-icon">{{ partial "nav-icon.html" "menu" }}</span>
+          <span class="menu-close-icon">{{ partial "nav-icon.html" "close" }}</span>
+        </button>
       </div>
     </div>
   </header>
   <main id="main" class="container" tabindex="-1">{{ block "main" . }}{{ end }}</main>
   <footer class="container site-footer"><span>{{ site.Title }} <span class="text-body-secondary">/ {{ i18n "tagline" }}</span></span>{{ with site.Home.OutputFormats.Get "RSS" }}<a href="{{ .RelPermalink }}">RSS ↗</a>{{ end }}</footer>
   <script src="{{ "js/site.js" | relURL }}" defer></script>
+  <script src="{{ "js/navigation.js" | relURL }}" defer></script>
 </body>
 </html>

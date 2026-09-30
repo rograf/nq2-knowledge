@@ -1,0 +1,5 @@
+[nq2-1-0-0-arm64-local]
+  name = 'NQ2 1.0.0 — ARM64 local'
+  path = 'downloads/nq2/1.0.0/nq2-arm64-local-1.0.0.zip'
+  size = 1548951
+  sha256 = 'd43ce00e7907d7e78eb225a4a897059b523361ec79830d78151099c7575cc2dd'

@@ -14,6 +14,8 @@ Every article is a Markdown file in `content/en/` (English) or `content/pl/` (Po
 | `docs/` | Application instructions and configuration guides |
 | `integrations/` | API documentation, connections, and data exchange |
 | `snippets/` | Short, reusable code examples |
+| `scripts/` | Complete scripts with configuration and usage instructions |
+| `files/` | Application releases to download and install yourself |
 | `blog/` | Articles, updates, and development notes |
 
 ## Create an article

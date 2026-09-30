@@ -1,6 +1,8 @@
 """Check translation coverage and internal links in a production Hugo build."""
 
 import json
+import hashlib
+import zipfile
 from html.parser import HTMLParser
 from pathlib import Path
 import tomllib
@@ -37,6 +39,28 @@ class Page(HTMLParser):
 
 def main():
     errors = []
+    catalog = tomllib.loads((ROOT / "data" / "downloads.toml").read_text(encoding="utf-8"))
+    for download_id, download in catalog.items():
+        archive = ROOT / "static" / download["path"]
+        published = PUBLIC / download["path"]
+        if not archive.is_file() or not published.is_file():
+            errors.append(f"Missing source or published archive: {download_id}")
+            continue
+        checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+        if archive.stat().st_size != download["size"] or checksum != download["sha256"]:
+            errors.append(f"Download metadata mismatch: {download_id}")
+        if hashlib.sha256(published.read_bytes()).hexdigest() != checksum:
+            errors.append(f"Published archive mismatch: {download_id}")
+        expected = f"{checksum}  {archive.name}\n"
+        for checksum_path in (archive.with_suffix('.zip.sha256'), published.with_suffix('.zip.sha256')):
+            if not checksum_path.is_file() or checksum_path.read_text(encoding="ascii") != expected:
+                errors.append(f"Invalid checksum file: {checksum_path}")
+        try:
+            with zipfile.ZipFile(archive) as bundle:
+                if bundle.testzip() is not None:
+                    errors.append(f"Corrupt ZIP archive: {download_id}")
+        except zipfile.BadZipFile:
+            errors.append(f"Invalid ZIP archive: {download_id}")
     sources = {}
     messages = {}
     indexes = {}
@@ -112,7 +136,7 @@ def main():
 
     if errors:
         raise SystemExit("\n".join(errors))
-    print(f"OK: {len(sources['en'])} translated Markdown pairs, matching UI keys and search indexes, links in {len(pages)} HTML files.")
+    print(f"OK: {len(sources['en'])} translated Markdown pairs, matching UI keys and search indexes, links in {len(pages)} HTML files, {len(catalog)} verified downloads.")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,14 @@
+{{ $id := .Get 0 }}
+{{ with index hugo.Data.downloads $id }}
+  {{ if not (os.FileExists (printf "static/%s" .path)) }}
+    {{ errorf "Download file is missing: %s" .path }}
+  {{ end }}
+  <div class="download-card">
+    <p class="download-title">{{ .name }}</p>
+    <a class="btn btn-primary" href="{{ .path | relURL }}" download>{{ i18n "downloadArchive" }} · ZIP</a>
+    <p class="small text-body-secondary mt-3">{{ i18n "fileSize" }}: {{ lang.FormatNumber 2 (div (float .size) 1000000) }} MB ({{ lang.FormatNumber 0 .size }} {{ i18n "bytes" }})</p>
+    <details><summary>{{ i18n "verifyDownload" }}</summary><p class="mt-2 mb-2">SHA-256: <code>{{ .sha256 }}</code></p><a href="{{ printf "%s.sha256" .path | relURL }}" download>{{ i18n "downloadChecksum" }}</a></details>
+  </div>
+{{ else }}
+  {{ errorf "Unknown download ID: %s" $id }}
+{{ end }}

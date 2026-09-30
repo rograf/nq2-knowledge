@@ -15,6 +15,8 @@ Każdy artykuł jest plikiem Markdown w `content/en/` (angielski) lub `content/p
 | `docs/` | Instrukcje obsługi i konfiguracji aplikacji |
 | `integrations/` | Opisy API, połączeń i wymiany danych |
 | `snippets/` | Krótkie, gotowe fragmenty kodu |
+| `scripts/` | Kompletne skrypty z konfiguracją i instrukcją użycia |
+| `files/` | Wydania aplikacji do pobrania i samodzielnej instalacji |
 | `blog/` | Wpisy, aktualności i notatki z rozwoju |
 
 ## Utwórz artykuł

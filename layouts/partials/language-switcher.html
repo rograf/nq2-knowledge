@@ -9,6 +9,9 @@
         {{ $translated = true }}
       {{ end }}
     {{ end }}
-    <a href="{{ $target.RelPermalink }}" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}" {{ if eq .Language.Lang $page.Language.Lang }}aria-current="true"{{ end }} title="{{ if not $translated }}{{ i18n "languageHome" }} {{ end }}{{ .Language.Label }}">{{ .Language.Lang | upper }}</a>
+    <a href="{{ $target.RelPermalink }}" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}" {{ if eq .Language.Lang $page.Language.Lang }}aria-current="true"{{ end }} title="{{ if not $translated }}{{ i18n "languageHome" }} {{ end }}{{ .Language.Label }}">
+      <span class="language-code">{{ .Language.Lang | upper }}</span><span>{{ .Language.Label }}</span>
+      {{ if eq .Language.Lang $page.Language.Lang }}{{ partial "nav-icon.html" "check" }}{{ end }}
+    </a>
   {{ end }}
 </nav>

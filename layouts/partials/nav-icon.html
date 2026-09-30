@@ -1,0 +1,7 @@
+﻿{{ $name := . }}
+{{ $path := printf "icons/%s.svg" $name }}
+{{ if templates.Exists (printf "_partials/%s" $path) }}
+  {{ partial $path }}
+{{ else }}
+  {{ partial "icons/docs.svg" }}
+{{ end }}

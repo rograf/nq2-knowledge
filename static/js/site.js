@@ -1,6 +1,10 @@
 (() => {
   const button = document.querySelector('#theme-toggle');
-  const updateLabel = () => button.setAttribute('aria-label', document.documentElement.dataset.bsTheme === 'dark' ? button.dataset.lightLabel : button.dataset.darkLabel);
+  const updateLabel = () => {
+    const label = document.documentElement.dataset.bsTheme === 'dark' ? button.dataset.lightLabel : button.dataset.darkLabel;
+    button.setAttribute('aria-label', label);
+    button.title = label;
+  };
   button.hidden = false;
   updateLabel();
   button.addEventListener('click', () => {
